@@ -45,6 +45,59 @@
             color: #f1faee;
         }
         
+        .phone-icon-wrapper {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 80px;
+            height: 80px;
+            cursor: pointer;
+            background: linear-gradient(90deg, #2a9d8f 0%, #2a9d8f 100%);
+            border-radius: 0 50% 50% 0;
+            padding: 4px;
+            transition: transform 0.3s ease;
+            margin-left: 0;
+            position: relative;
+            right: 9rem;
+            top: 1.5rem;
+        }
+        
+        .action-icons {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 10px;
+            padding-top: 20px;
+        }
+        
+        .contact-card {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 16px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+            position: relative;
+        }
+        
+        .phone-icon-wrapper img {
+            width: 40px;
+            height: 40px;
+            margin: 0 auto;
+            /* Centraliza a imagem horizontalmente */
+            transform: translateY(10%);
+            /* Ajusta a imagem verticalmente */
+        }
+        
+        .edit-btn,
+        .delete-btn {
+            width: 40px;
+            height: 40px;
+            cursor: pointer;
+        }
+        
         #contactModal {
             /* O modal ocupa mais espaço na tela para facilitar a visualização */
             padding: 20px;
@@ -483,14 +536,13 @@
                 </div>
             </div>
             <div class="action-icons" style="margin-left: auto; display: flex; gap: 10px; align-items: flex-end; padding-top: 20px;">
-                <img src="https://i.postimg.cc/KYPWd041/phone-svgrepo-com.png" class="call-btn" alt="Ligar" onclick="makeCall('${contact.phone}')"
-                    style="width: 40px; height: 40px; cursor: pointer;">
-                <img src="https://i.postimg.cc/zXw0Dy8Q/edit-4-svgrepo-com-1.png" class="edit-btn" alt="Editar" onclick="openModal(true, ${index})"
-                    style="width: 40px; height: 40px; cursor: pointer;">
-                <img src="https://i.postimg.cc/R0pPr24V/delete-2-svgrepo-com.png" class="delete-btn" alt="Excluir" onclick="openConfirmModal(${index})"
-                    style="width: 40px; height: 40px; cursor: pointer;">
+                <div class="phone-icon-wrapper">
+                  <img src="https://i.postimg.cc/HsvRSLBJ/phone-svgrepo-com.png" class="call-btn phone-icon" alt="Ligar" onclick="makeCall('${contact.phone}')">
+                </div>
+                <img src="https://i.postimg.cc/zXw0Dy8Q/edit-4-svgrepo-com-1.png" class="edit-btn" alt="Editar" onclick="openModal(true, ${index})">
+                <img src="https://i.postimg.cc/R0pPr24V/delete-2-svgrepo-com.png" class="delete-btn" alt="Excluir" onclick="openConfirmModal(${index})">
             </div>
-        </div>
+           </div>
         `;
                 contactGrid.innerHTML += card;
             });
