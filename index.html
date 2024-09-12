@@ -350,12 +350,18 @@
     <header>
         <h1>FPHONE</h1>
         <div class="flex items-center space-x-4">
-            <!-- Substitua o "+" por uma imagem -->
+            <!-- Ícone de adicionar contato -->
             <img src="https://i.postimg.cc/SxpSZJnS/add-circle-svgrepo-com-1.png" alt="Adicionar Contato" class="add-contact-img cursor-pointer" onclick="openModal()">
+
+            <!-- Ícone de "Sobre" -->
+            <img src="https://i.postimg.cc/x16sjjXv/about-filled-svgrepo-com.png" alt="Sobre" class="add-contact-img cursor-pointer" onclick="openAboutModal()">
+
+            <!-- Foto do idoso -->
             <input type="file" id="photoUpload" accept="image/*" style="display: none;" onchange="updateProfilePhoto()" />
             <img src="https://via.placeholder.com/80" alt="Foto Idoso" class="profile-photo" id="profilePhoto" onclick="triggerPhotoUpload()">
         </div>
     </header>
+
 
 
     <!-- Lista de Contatos -->
@@ -402,6 +408,21 @@
             <div class="flex justify-center space-x-4">
                 <button class="bg-red-500 hover:bg-red-600 text-white py-3 px-6 rounded-md" onclick="confirmDelete()">Excluir</button>
                 <button class="bg-gray-300 hover:bg-gray-400 text-black py-3 px-6 rounded-md" onclick="closeConfirmModal()">Cancelar</button>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Modal "Sobre" -->
+    <div id="aboutModal" class="fixed inset-0 hidden bg-gray-900 bg-opacity-80 flex justify-center items-center">
+        <div class="bg-white p-8 rounded-lg shadow-lg w-full h-full relative max-w-screen-lg">
+            <span class="close absolute top-4 right-4 text-gray-500 text-3xl cursor-pointer" onclick="closeAboutModal()">&times;</span>
+            <div class="flex flex-col items-center justify-center h-full">
+                <img src="https://via.placeholder.com/150" alt="Imagem Sobre" class="rounded-lg mb-6">
+                <h2 class="text-3xl font-semibold mb-6">Sobre o Projeto</h2>
+                <p class="text-lg text-center px-6">
+                    Este projeto, chamado FPHONE, foi desenvolvido com o objetivo de facilitar o uso de telefones por idosos, garantindo uma interface simples, intuitiva e com funções essenciais para facilitar a comunicação.
+                </p>
             </div>
         </div>
     </div>
@@ -509,6 +530,17 @@
             document.getElementById("confirmModal").classList.add("hidden");
             deleteIndex = null; // Limpa o índice do contato
         }
+
+        // Função para abrir o modal "Sobre"
+        function openAboutModal() {
+            document.getElementById("aboutModal").classList.remove("hidden");
+        }
+
+        // Função para fechar o modal "Sobre"
+        function closeAboutModal() {
+            document.getElementById("aboutModal").classList.add("hidden");
+        }
+
 
         // Função para confirmar a exclusão do contato
         function confirmDelete() {
