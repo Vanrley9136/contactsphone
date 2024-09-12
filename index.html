@@ -220,16 +220,13 @@
             z-index: 0;
             transition: transform 0.3s ease;
         }
-        /* Efeito hover para deixar o efeito mais dinâmico */
         
         .contact-card:hover::before {
             transform: scale(1.2);
-            /* Aumenta um pouco a borda no hover */
         }
         
         .contact-card img {
             width: 70px;
-            /* Aumentando o tamanho da imagem do contato */
             height: 70px;
             border-radius: 50%;
             margin-right: 20px;
@@ -244,7 +241,6 @@
         
         .contact-info h2 {
             font-size: 24px;
-            /* Aumentando o tamanho do nome */
             font-weight: bold;
             margin-bottom: 8px;
             color: #333;
@@ -253,7 +249,6 @@
         
         .contact-info p {
             font-size: 22px;
-            /* Aumentando o tamanho do telefone */
             color: #666;
         }
         
@@ -349,20 +344,18 @@
     <!-- Header -->
     <header>
         <h1>FPHONE</h1>
-        <div class="flex items-center space-x-4">
+        <div class="flex items-center">
             <!-- Ícone de adicionar contato -->
-            <img src="https://i.postimg.cc/SxpSZJnS/add-circle-svgrepo-com-1.png" alt="Adicionar Contato" class="add-contact-img cursor-pointer" onclick="openModal()">
+            <img src="https://i.postimg.cc/SxpSZJnS/add-circle-svgrepo-com-1.png" alt="Adicionar Contato" class="add-contact-img cursor-pointer mr-2" onclick="openModal()">
 
             <!-- Ícone de "Sobre" -->
-            <img src="https://i.postimg.cc/x16sjjXv/about-filled-svgrepo-com.png" alt="Sobre" class="add-contact-img cursor-pointer" onclick="openAboutModal()">
+            <img src="https://i.postimg.cc/x16sjjXv/about-filled-svgrepo-com.png" alt="Sobre" class="add-contact-img sobre cursor-pointer mr-4" onclick="openAboutModal()">
 
             <!-- Foto do idoso -->
             <input type="file" id="photoUpload" accept="image/*" style="display: none;" onchange="updateProfilePhoto()" />
             <img src="https://via.placeholder.com/80" alt="Foto Idoso" class="profile-photo" id="profilePhoto" onclick="triggerPhotoUpload()">
         </div>
     </header>
-
-
 
     <!-- Lista de Contatos -->
     <div class="container mx-auto p-6">
@@ -689,5 +682,7 @@
         };
     </script>
 </body>
+
+</html>
 
 </html>
