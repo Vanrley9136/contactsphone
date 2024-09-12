@@ -449,12 +449,22 @@
                 document.getElementById("photoFile").value = "";
             }
 
-            document.getElementById("contactModal").classList.remove("hidden");
+            // Exibe o modal com animação
+            const modal = document.getElementById("contactModal");
+            modal.classList.remove("hidden");
+            modal.classList.add("fade-in");
         }
 
         // Função para fechar o modal
         function closeModal() {
-            document.getElementById("contactModal").classList.add("hidden");
+            const modal = document.getElementById("contactModal");
+            modal.classList.remove("fade-in");
+            modal.classList.add("fade-out");
+
+            setTimeout(() => {
+                modal.classList.add("hidden");
+                modal.classList.remove("fade-out");
+            }, 300); // Duração da animação
         }
 
         function saveContact() {
@@ -522,25 +532,44 @@
         // Função para abrir o modal de exclusão de contato
         function openConfirmModal(index) {
             deleteIndex = index; // Armazena o índice do contato a ser excluído
-            document.getElementById("confirmModal").classList.remove("hidden");
+
+            // Exibe o modal com animação
+            const confirmModal = document.getElementById("confirmModal");
+            confirmModal.classList.remove("hidden");
+            confirmModal.classList.add("fade-in");
         }
 
         // Função para fechar o modal de confirmação
         function closeConfirmModal() {
-            document.getElementById("confirmModal").classList.add("hidden");
-            deleteIndex = null; // Limpa o índice do contato
+            const confirmModal = document.getElementById("confirmModal");
+            confirmModal.classList.remove("fade-in");
+            confirmModal.classList.add("fade-out");
+
+            setTimeout(() => {
+                confirmModal.classList.add("hidden");
+                confirmModal.classList.remove("fade-out");
+            }, 300); // Duração da animação
         }
+
 
         // Função para abrir o modal "Sobre"
         function openAboutModal() {
-            document.getElementById("aboutModal").classList.remove("hidden");
+            const aboutModal = document.getElementById("aboutModal");
+            aboutModal.classList.remove("hidden");
+            aboutModal.classList.add("fade-in");
         }
 
         // Função para fechar o modal "Sobre"
         function closeAboutModal() {
-            document.getElementById("aboutModal").classList.add("hidden");
-        }
+            const aboutModal = document.getElementById("aboutModal");
+            aboutModal.classList.remove("fade-in");
+            aboutModal.classList.add("fade-out");
 
+            setTimeout(() => {
+                aboutModal.classList.add("hidden");
+                aboutModal.classList.remove("fade-out");
+            }, 300); // Duração da animação
+        }
 
         // Função para confirmar a exclusão do contato
         function confirmDelete() {
