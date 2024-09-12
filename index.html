@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#2a9d8f">
+
+    <title>Contatos Rápidos</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Zain:wght@200;300;400;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://unpkg.com/boxicons@2.1.2/css/boxicons.min.css" rel="stylesheet">
+    <style>
+        body {
+            font-family: "Zain", sans-serif;
+            background-color: #f5f7fa;
+        }
+        /* Estilo para o header */
+        /* Estilo atualizado para o header */
+        
+        header {
+            background: linear-gradient(90deg, #2a9d8f 0%, #2a9d8f 100%);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            padding: 20px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-radius: 0 0 20px 20px;
+            transition: background-color 0.3s ease;
+        }
+        
+        header h1 {
+            font-size: 30px;
+            font-weight: 600;
+            color: #fff;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            transition: color 0.3s ease;
+        }
+        /* Efeito de hover no título */
+        
+        header h1:hover {
+            color: #f1faee;
+        }
+        
+        #contactModal {
+            /* O modal ocupa mais espaço na tela para facilitar a visualização */
+            padding: 20px;
+        }
+        
+        #contactModal .close {
+            font-size: 3rem;
+            /* Botão de fechar maior */
+        }
+        
+        #contactModal h2 {
+            font-size: 2.5rem;
+            /* Título do modal maior */
+        }
+        
+        #contactModal label {
+            font-size: 1.25rem;
+            /* Legendas grandes e claras */
+        }
+        
+        #contactModal input[type="text"],
+        #contactModal input[type="tel"],
+        #contactModal input[type="file"] {
+            font-size: 1.25rem;
+            /* Inputs maiores */
+            padding: 15px;
+            border: 2px solid #d1d5db;
+            border-radius: 8px;
+        }
+        
+        #contactModal button {
+            font-size: 1.5rem;
+            /* Botão maior e com texto legível */
+            padding: 15px;
+            margin-top: 20px;
+        }
+        /* Estilo da foto de perfil */
+        
+        .profile-photo {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            object-fit: cover;
+            cursor: pointer;
+            transition: box-shadow 0.3s ease, transform 0.3s ease;
+            border: 5px solid aliceblue;
+        }
+        
+        .profile-photo:hover {
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
+            transform: scale(1.05);
+        }
+        /* Estilo do botão de adicionar contato */
+        
+        .add-contact-btn {
+            background-color: #f1faee;
+            color: #2a9d8f;
+            font-size: 30px;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.3s ease;
+        }
+        
+        .add-contact-btn:hover {
+            background-color: #e9c46a;
+            color: #fff;
+            transform: rotate(360deg);
+        }
+        /* Efeito para ícones e elementos no header */
+        
+        .add-contact-btn i {
+            font-size: 24px;
+            color: #2a9d8f;
+            transition: color 0.3s ease;
+        }
+        
+        .add-contact-btn:hover i {
+            color: #fff;
+        }
+        /* Containers de contato maiores para idosos */
+        
+        .contact-card {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 16px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 20px;
+            position: relative;
+            overflow: hidden;
+            /* Para garantir que o before não extrapole o container */
+            transition: background-color 0.3s;
+        }
+        /* Estilo mais bonito para o ::before */
+        
+        .contact-card::before {
+            content: '';
+            position: absolute;
+            bottom: 290px;
+            left: 0;
+            width: 120px;
+            height: 120px;
+            background: linear-gradient(90deg, #2a9d8f 0%, #2a9d8f 100%);
+            border-radius: 0 50% 50% 0;
+            z-index: 0;
+            transition: transform 0.3s ease;
+        }
+        /* Efeito hover para deixar o efeito mais dinâmico */
+        
+        .contact-card:hover::before {
+            transform: scale(1.2);
+            /* Aumenta um pouco a borda no hover */
+        }
+        
+        .contact-card img {
+            width: 70px;
+            /* Aumentando o tamanho da imagem do contato */
+            height: 70px;
+            border-radius: 50%;
+            margin-right: 20px;
+        }
+        
+        .contact-info {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            flex-grow: 1;
+        }
+        
+        .contact-info h2 {
+            font-size: 24px;
+            /* Aumentando o tamanho do nome */
+            font-weight: bold;
+            margin-bottom: 8px;
+            color: #333;
+            text-transform: capitalize;
+        }
+        
+        .contact-info p {
+            font-size: 22px;
+            /* Aumentando o tamanho do telefone */
+            color: #666;
+        }
+        
+        .contact-photo {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            margin-right: 15px;
+            object-fit: cover;
+            transition: box-shadow 0.3s ease, transform 0.3s ease;
+            border: 3px solid #2a9d8f;
+        }
+        /* Efeito de hover para a foto do contato */
+        
+        .contact-photo:hover {
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
+            transform: scale(1.05);
+        }
+        /* Ícones para ações */
+        
+        .action-icons {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .action-icons img {
+            width: 40px;
+            height: 40px;
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+        
+        .action-icons img:hover {
+            transform: scale(1.1);
+        }
+        
+        .py-2 {
+            text-transform: capitalize;
+        }
+        /* Remover alinhamento central */
+        
+        .text-left {
+            text-align: left;
+        }
+        
+        .text-gray-700 {
+            color: #4a5568;
+        }
+        
+        .mb-6 {
+            margin-bottom: 1.5rem;
+        }
+        /* Estilos responsivos para dispositivos móveis */
+        
+        @media (max-width: 768px) {
+            .contact-card {
+                flex-direction: column;
+                align-items: center;
+                padding: 15px;
+                text-align: center;
+            }
+            .contact-card img {
+                margin-bottom: 15px;
+            }
+            .contact-info {
+                align-items: center;
+            }
+            .action-icons {
+                justify-content: center;
+                gap: 15px;
+                margin-top: 15px;
+            }
+            .contact-info h2 {
+                font-size: 45px;
+                /* Ajustando o nome para dispositivos móveis */
+            }
+            .contact-info p {
+                font-size: 35px;
+                /* Ajustando o telefone para dispositivos móveis */
+            }
+            .action-icons img {
+                width: 35px;
+                height: 35px;
+            }
+        }
+    </style>
+
+
+</head>
+
+<body>
+    <!-- Header -->
+    <header>
+        <h1>Contatos</h1>
+        <div class="flex items-center space-x-4">
+            <div class="add-contact-btn" onclick="openModal()">+</div>
+            <input type="file" id="photoUpload" accept="image/*" style="display: none;" onchange="updateProfilePhoto()" />
+            <img src="https://via.placeholder.com/80" alt="Foto Idoso" class="profile-photo" id="profilePhoto" onclick="triggerPhotoUpload()">
+        </div>
+    </header>
+
+    <!-- Lista de Contatos -->
+    <div class="container mx-auto p-6">
+        <h2 class="text-2xl  text-gray-700 mb-6">Contatos Favoritos</h2>
+        <div id="contactGrid" class="space-y-6">
+            <!-- Contatos serão exibidos aqui -->
+        </div>
+    </div>
+
+    <!-- Modal de adição/edição de contato -->
+    <div id="contactModal" class="fixed inset-0 hidden bg-gray-900 bg-opacity-50 flex justify-center items-center">
+        <div class="bg-white p-8 rounded-lg shadow-lg w-full md:w-2/3 lg:w-1/2 relative" style="max-width: 600px;">
+            <span class="close absolute top-4 right-4 text-gray-500 text-3xl cursor-pointer" onclick="closeModal()">&times;</span>
+            <h2 class="text-3xl font-semibold mb-6 text-center" id="modalTitle">Adicionar Contato</h2>
+            <form>
+                <!-- Legendas para facilitar a compreensão -->
+                <div class="mb-6">
+                    <label for="name" class="block text-xl font-medium mb-2">Nome do contato</label>
+                    <input type="text" id="name" placeholder="Insira o nome do contato" class="w-full px-4 py-3 text-lg border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" />
+                </div>
+
+                <div class="mb-6">
+                    <label for="phone" class="block text-xl font-medium mb-2">Número de telefone</label>
+                    <input type="tel" id="phone" placeholder="Insira o número de telefone" class="w-full px-4 py-3 text-lg border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" />
+                </div>
+
+                <div class="mb-6">
+                    <label for="photoFile" class="block text-xl font-medium mb-2">Foto do contato</label>
+                    <input type="file" id="photoFile" accept="image/*" class="w-full px-4 py-3 text-lg border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" />
+                </div>
+
+                <button type="button" class="w-full bg-blue-500 hover:bg-blue-600 text-white py-3 px-6 rounded-md text-xl" onclick="saveContact()">Salvar Contato</button>
+            </form>
+        </div>
+    </div>
+
+
+    <!-- Modal de confirmação para excluir contato -->
+    <div id="confirmModal" class="fixed inset-0 hidden bg-gray-900 bg-opacity-50 flex justify-center items-center">
+        <div class="bg-white p-8 rounded-lg shadow-lg w-full md:w-1/3 relative">
+            <span class="close absolute top-4 right-4 text-gray-500 text-3xl cursor-pointer" onclick="closeConfirmModal()">&times;</span>
+            <h2 class="text-2xl font-semibold mb-6 text-center">Tem certeza que deseja excluir este contato?</h2>
+            <div class="flex justify-center space-x-4">
+                <button class="bg-red-500 hover:bg-red-600 text-white py-3 px-6 rounded-md" onclick="confirmDelete()">Excluir</button>
+                <button class="bg-gray-300 hover:bg-gray-400 text-black py-3 px-6 rounded-md" onclick="closeConfirmModal()">Cancelar</button>
+            </div>
+        </div>
+    </div>
+
+
+    <script>
+        let contacts = JSON.parse(localStorage.getItem('contacts')) || [];
+        let currentContactIndex = null;
+        let deleteIndex = null; // Variável para armazenar o índice do contato a ser deletado
+
+        // Função para abrir o modal (Adicionar/Editar contato)
+        function openModal(isEdit = false, index = null) {
+            currentContactIndex = index;
+
+            if (isEdit && index !== null) {
+                document.getElementById('modalTitle').textContent = 'Editar Contato';
+                const contact = contacts[index];
+                document.getElementById("name").value = contact.name;
+                document.getElementById("phone").value = contact.phone;
+            } else {
+                document.getElementById('modalTitle').textContent = 'Adicionar Contato';
+                document.getElementById("name").value = "";
+                document.getElementById("phone").value = "";
+                document.getElementById("photoFile").value = "";
+            }
+
+            document.getElementById("contactModal").classList.remove("hidden");
+        }
+
+        // Função para fechar o modal
+        function closeModal() {
+            document.getElementById("contactModal").classList.add("hidden");
+        }
+
+        // Função para salvar contato (Adicionar ou Editar)
+        function saveContact() {
+            const name = document.getElementById("name").value;
+            const phone = document.getElementById("phone").value;
+            const photoFile = document.getElementById("photoFile").files[0];
+
+            if (name && phone) {
+                const reader = new FileReader();
+
+                reader.onload = function(event) {
+                    const photoUrl = photoFile ? event.target.result : (contacts[currentContactIndex] ? contacts[currentContactIndex].photoUrl : null);
+
+                    const contact = {
+                        name,
+                        phone,
+                        photoUrl: photoUrl || "https://via.placeholder.com/60"
+                    };
+
+                    if (currentContactIndex !== null) {
+                        // Editar contato existente
+                        contacts[currentContactIndex] = contact;
+                    } else {
+                        // Adicionar novo contato
+                        contacts.push(contact);
+                    }
+
+                    localStorage.setItem('contacts', JSON.stringify(contacts));
+
+                    // Atualiza a exibição de contatos
+                    displayContacts();
+
+                    // Fecha o modal e limpa os campos
+                    closeModal();
+                    document.getElementById("name").value = "";
+                    document.getElementById("phone").value = "";
+                    document.getElementById("photoFile").value = "";
+                };
+
+                if (photoFile) {
+                    reader.readAsDataURL(photoFile);
+                } else {
+                    const contact = {
+                        name,
+                        phone,
+                        photoUrl: contacts[currentContactIndex] ? contacts[currentContactIndex].photoUrl : "https://i.postimg.cc/N0YjmPHD/user-circle-svgrepo-com.png"
+                    };
+                    if (currentContactIndex !== null) {
+                        contacts[currentContactIndex] = contact;
+                    } else {
+                        contacts.push(contact);
+                    }
+                    localStorage.setItem('contacts', JSON.stringify(contacts));
+                    displayContacts();
+                    closeModal();
+                }
+            } else {
+                alert("Preencha o nome e o telefone.");
+            }
+        }
+
+        // Função para abrir o modal de exclusão de contato
+        function openConfirmModal(index) {
+            deleteIndex = index; // Armazena o índice do contato a ser excluído
+            document.getElementById("confirmModal").classList.remove("hidden");
+        }
+
+        // Função para fechar o modal de confirmação
+        function closeConfirmModal() {
+            document.getElementById("confirmModal").classList.add("hidden");
+            deleteIndex = null; // Limpa o índice do contato
+        }
+
+        // Função para confirmar a exclusão do contato
+        function confirmDelete() {
+            if (deleteIndex !== null) {
+                contacts.splice(deleteIndex, 1); // Exclui o contato do array
+                localStorage.setItem('contacts', JSON.stringify(contacts)); // Atualiza o localStorage
+                displayContacts(); // Atualiza a exibição dos contatos
+                closeConfirmModal(); // Fecha o modal de confirmação
+            }
+        }
+
+        // Função para exibir os contatos
+        function displayContacts() {
+            const contactGrid = document.getElementById("contactGrid");
+            contactGrid.innerHTML = "";
+
+            contacts.forEach((contact, index) => {
+                const card = `
+        <div class="contact-card" style="padding-bottom: 20px;">
+            <div class="contact-info">
+                <img src="${contact.photoUrl}" alt="${contact.name}" class="contact-photo">
+                <div>
+                    <h2>${contact.name}</h2>
+                    <p>${contact.phone}</p>
+                </div>
+            </div>
+            <div class="action-icons" style="margin-left: auto; display: flex; gap: 10px; align-items: flex-end; padding-top: 20px;">
+                <img src="https://i.postimg.cc/KYPWd041/phone-svgrepo-com.png" class="call-btn" alt="Ligar" onclick="makeCall('${contact.phone}')"
+                    style="width: 40px; height: 40px; cursor: pointer;">
+                <img src="https://i.postimg.cc/zXw0Dy8Q/edit-4-svgrepo-com-1.png" class="edit-btn" alt="Editar" onclick="openModal(true, ${index})"
+                    style="width: 40px; height: 40px; cursor: pointer;">
+                <img src="https://i.postimg.cc/R0pPr24V/delete-2-svgrepo-com.png" class="delete-btn" alt="Excluir" onclick="openConfirmModal(${index})"
+                    style="width: 40px; height: 40px; cursor: pointer;">
+            </div>
+        </div>
+        `;
+                contactGrid.innerHTML += card;
+            });
+        }
+        // Função para deletar contato
+        function deleteContact(event, index) {
+            event.stopPropagation();
+            contacts.splice(index, 1);
+            localStorage.setItem('contacts', JSON.stringify(contacts));
+            displayContacts();
+        }
+
+        // Função para iniciar uma chamada
+        function makeCall(phone) {
+            window.location.href = `tel:${phone}`;
+        }
+
+        // Função para abrir o seletor de arquivo para alterar a foto do idoso
+        function triggerPhotoUpload() {
+            document.getElementById("photoUpload").click();
+        }
+
+        // Função para atualizar a foto do idoso
+        function updateProfilePhoto() {
+            const photoFile = document.getElementById("photoUpload").files[0];
+            if (photoFile) {
+                const reader = new FileReader();
+                reader.onload = function(event) {
+                    document.getElementById("profilePhoto").src = event.target.result;
+                    localStorage.setItem('profilePhoto', event.target.result);
+                };
+                reader.readAsDataURL(photoFile);
+            }
+        }
+
+        // Função para carregar a foto de perfil salva
+        function loadProfilePhoto() {
+            const savedPhoto = localStorage.getItem('profilePhoto');
+            if (savedPhoto) {
+                document.getElementById("profilePhoto").src = savedPhoto;
+            }
+        }
+
+        // Carrega os contatos e a foto de perfil ao carregar a página
+        window.onload = function() {
+            displayContacts();
+            loadProfilePhoto();
+        };
+    </script>
+</body>
+
+</html>
