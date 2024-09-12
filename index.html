@@ -27,7 +27,7 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            border-radius: 0 0 20px 20px;
+            border-radius: 0 0 60px 60px;
             transition: background-color 0.3s ease;
         }
         
@@ -128,6 +128,14 @@
         
         .add-contact-btn:hover i {
             color: #fff;
+        }
+        
+        .add-contact-img {
+            width: 50px;
+            /* Defina o tamanho da imagem aqui */
+            height: 50px;
+            border-radius: 50%;
+            /* Se quiser que a imagem tenha bordas arredondadas */
         }
         /* Containers de contato maiores para idosos */
         
@@ -287,13 +295,15 @@
 <body>
     <!-- Header -->
     <header>
-        <h1>Contatos</h1>
+        <h1>FPHONE</h1>
         <div class="flex items-center space-x-4">
-            <div class="add-contact-btn" onclick="openModal()">+</div>
+            <!-- Substitua o "+" por uma imagem -->
+            <img src="https://i.postimg.cc/SxpSZJnS/add-circle-svgrepo-com-1.png" alt="Adicionar Contato" class="add-contact-img cursor-pointer" onclick="openModal()">
             <input type="file" id="photoUpload" accept="image/*" style="display: none;" onchange="updateProfilePhoto()" />
             <img src="https://via.placeholder.com/80" alt="Foto Idoso" class="profile-photo" id="profilePhoto" onclick="triggerPhotoUpload()">
         </div>
     </header>
+
 
     <!-- Lista de Contatos -->
     <div class="container mx-auto p-6">
@@ -317,7 +327,7 @@
 
                 <div class="mb-6">
                     <label for="phone" class="block text-xl font-medium mb-2">Número de telefone</label>
-                    <input type="tel" id="phone" placeholder="Insira o número de telefone" class="w-full px-4 py-3 text-lg border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" />
+                    <input type="tel" id="phone" placeholder="Insira o número de telefone" class="w-full px-4 py-3 text-lg border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" required />
                 </div>
 
                 <div class="mb-6">
@@ -373,65 +383,67 @@
             document.getElementById("contactModal").classList.add("hidden");
         }
 
-        // Função para salvar contato (Adicionar ou Editar)
         function saveContact() {
             const name = document.getElementById("name").value;
             const phone = document.getElementById("phone").value;
             const photoFile = document.getElementById("photoFile").files[0];
 
-            if (name && phone) {
-                const reader = new FileReader();
+            // Validação de nome e telefone
+            if (!name || !isValidPhone(phone)) {
+                alert("Preencha o nome corretamente e o telefone no formato (XX) XXXXX-XXXX.");
+                return;
+            }
 
-                reader.onload = function(event) {
-                    const photoUrl = photoFile ? event.target.result : (contacts[currentContactIndex] ? contacts[currentContactIndex].photoUrl : null);
+            const reader = new FileReader();
 
-                    const contact = {
-                        name,
-                        phone,
-                        photoUrl: photoUrl || "https://via.placeholder.com/60"
-                    };
+            reader.onload = function(event) {
+                const photoUrl = photoFile ? event.target.result : (contacts[currentContactIndex] ? contacts[currentContactIndex].photoUrl : null);
 
-                    if (currentContactIndex !== null) {
-                        // Editar contato existente
-                        contacts[currentContactIndex] = contact;
-                    } else {
-                        // Adicionar novo contato
-                        contacts.push(contact);
-                    }
-
-                    localStorage.setItem('contacts', JSON.stringify(contacts));
-
-                    // Atualiza a exibição de contatos
-                    displayContacts();
-
-                    // Fecha o modal e limpa os campos
-                    closeModal();
-                    document.getElementById("name").value = "";
-                    document.getElementById("phone").value = "";
-                    document.getElementById("photoFile").value = "";
+                const contact = {
+                    name,
+                    phone,
+                    photoUrl: photoUrl || "https://via.placeholder.com/60"
                 };
 
-                if (photoFile) {
-                    reader.readAsDataURL(photoFile);
+                if (currentContactIndex !== null) {
+                    // Editar contato existente
+                    contacts[currentContactIndex] = contact;
                 } else {
-                    const contact = {
-                        name,
-                        phone,
-                        photoUrl: contacts[currentContactIndex] ? contacts[currentContactIndex].photoUrl : "https://i.postimg.cc/N0YjmPHD/user-circle-svgrepo-com.png"
-                    };
-                    if (currentContactIndex !== null) {
-                        contacts[currentContactIndex] = contact;
-                    } else {
-                        contacts.push(contact);
-                    }
-                    localStorage.setItem('contacts', JSON.stringify(contacts));
-                    displayContacts();
-                    closeModal();
+                    // Adicionar novo contato
+                    contacts.push(contact);
                 }
+
+                localStorage.setItem('contacts', JSON.stringify(contacts));
+
+                // Atualiza a exibição de contatos
+                displayContacts();
+
+                // Fecha o modal e limpa os campos
+                closeModal();
+                document.getElementById("name").value = "";
+                document.getElementById("phone").value = "";
+                document.getElementById("photoFile").value = "";
+            };
+
+            if (photoFile) {
+                reader.readAsDataURL(photoFile);
             } else {
-                alert("Preencha o nome e o telefone.");
+                const contact = {
+                    name,
+                    phone,
+                    photoUrl: contacts[currentContactIndex] ? contacts[currentContactIndex].photoUrl : "https://i.postimg.cc/N0YjmPHD/user-circle-svgrepo-com.png"
+                };
+                if (currentContactIndex !== null) {
+                    contacts[currentContactIndex] = contact;
+                } else {
+                    contacts.push(contact);
+                }
+                localStorage.setItem('contacts', JSON.stringify(contacts));
+                displayContacts();
+                closeModal();
             }
         }
+
 
         // Função para abrir o modal de exclusão de contato
         function openConfirmModal(index) {
@@ -521,6 +533,41 @@
                 document.getElementById("profilePhoto").src = savedPhoto;
             }
         }
+
+        // Função para aplicar a máscara de telefone no campo
+        function maskPhone(event) {
+            let input = event.target;
+            input.value = formatPhone(input.value);
+        }
+
+        // Função que formata o número de telefone para o padrão brasileiro
+        function formatPhone(value) {
+            // Remove todos os caracteres não numéricos
+            value = value.replace(/\D/g, '');
+
+            // Aplica a máscara no formato (XX) XXXXX-XXXX
+            if (value.length > 10) {
+                value = value.replace(/^(\d{2})(\d{5})(\d{4}).*/, '($1) $2-$3');
+            } else if (value.length > 5) {
+                value = value.replace(/^(\d{2})(\d{4})(\d{0,4}).*/, '($1) $2-$3');
+            } else if (value.length > 2) {
+                value = value.replace(/^(\d{2})(\d{0,5})/, '($1) $2');
+            } else {
+                value = value.replace(/^(\d*)/, '($1');
+            }
+
+            return value;
+        }
+
+        // Valida se o telefone está no formato correto
+        function isValidPhone(value) {
+            const phoneRegex = /^\(\d{2}\) \d{5}-\d{4}$/;
+            return phoneRegex.test(value);
+        }
+
+        // Adiciona a máscara de telefone ao campo de input
+        document.getElementById('phone').addEventListener('input', maskPhone);
+
 
         // Carrega os contatos e a foto de perfil ao carregar a página
         window.onload = function() {
